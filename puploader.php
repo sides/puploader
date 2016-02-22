@@ -77,7 +77,6 @@ if (isset($_POST[$key1]) && $_POST[$key1] === $key2 && isset($_FILES['file'])) {
 					$mime === 'image/jpeg' ||
 					$mime === 'image/gif' ||
 					$mime === 'image/bmp' ||
-					$mime === 'image/tiff' ||
 					$mime === 'image/webp' ||
 					$mime === 'image/svg+xml'
 				) {
