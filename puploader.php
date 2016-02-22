@@ -25,7 +25,8 @@
  */
 
 // 
-// usage: curl -F'key1=key2' -F'file=@yourfile.png' http://example/puploader.php
+// puploader - personal uploader
+//     curl -F'key1=key2' -F'file=@yourfile.png' http://example/puploader.php
 // 
 // also included is puploader-sharex.json for a sharex custom uploader.
 // 
@@ -38,15 +39,15 @@ $key1             = '1234';   // the POST request must have a parameter with thi
 $key2             = '1234';   // and this value. works as a password. also recommended is to keep this php file in a secret folder with a secret name.
 $max_size         = 10485760; // max filesize in bytes. note that your server might impose its own restrictions.
 $hash_algo        = 'sha256'; // hash algorithm used to generate filenames and check for duplicates.
-$min_len          = 4;        // minimum length of a generated filename.
+$min_len          = 4;        // minimum length of a generated hash.
 $default_name     = '_';      // if a file in the POST request has this as the filename, ignore it and go straight for a generated name.
 $hash_sep         = '-';      // separator between the filename and hash when necessary.
 $root_path        = '../';    // root path of subfolders, can be relative to this php file.
 $subfolder_direct = 'd/';     // direct (or default) folder, when there is no matching mime type.
-$subfolder_image  = 'i/';     // image folder, for files with an image mime type.
-$subfolder_video  = 'v/';     // video folder, for files with a video mime type.
-$subfolder_audio  = 'a/';     // audio folder, for files with an audio mime type.
-$subfolder_text   = 't/';     // text folder, for files with a text mime type.
+$subfolder_image  = 'i/';     // image folder, for files with a web image mime type.
+$subfolder_video  = 'v/';     // video folder, for files with a web video mime type.
+$subfolder_audio  = 'a/';     // audio folder, for files with a web audio mime type.
+$subfolder_text   = 't/';     // text folder, for files with a web text mime type.
 $root_url         = 'http://example/'; // when the file is uploaded, an url of form {root_url}{subfolder}{file} is returned.
 
 if (isset($_POST[$key1]) && $_POST[$key1] === $key2 && isset($_FILES['file'])) {
