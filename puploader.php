@@ -40,6 +40,7 @@ $max_size         = 10485760; // max filesize in bytes. note that your server mi
 $hash_algo        = 'sha256'; // hash algorithm used to generate filenames and check for duplicates.
 $min_len          = 4;        // minimum length of a generated filename.
 $default_name     = '_';      // if a file in the POST request has this as the filename, ignore it and go straight for a generated name.
+$hash_sep         = '-';      // separator between the filename and hash when necessary.
 $root_path        = '../';    // root path of subfolders, can be relative to this php file.
 $subfolder_direct = 'd/';     // direct (or default) folder, when there is no matching mime type.
 $subfolder_image  = 'i/';     // image folder, for files with an image mime type.
@@ -110,7 +111,7 @@ if (isset($_POST[$key1]) && $_POST[$key1] === $key2 && isset($_FILES['file'])) {
 					echo "$root_url$subfolder" . rawurlencode($try_name);
 				} else {
 					if ($tries === 0)
-						$try_name = $info['filename'] . '-';
+						$try_name = $info['filename'] . $hash_sep;
 					else
 						$try_name = '';
 					$max_len = strlen($hash);
