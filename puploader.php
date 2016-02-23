@@ -26,7 +26,7 @@
 
 // 
 // puploader - personal uploader
-//     curl -F'key1=key2' -F'file=@yourfile.png' http://example/puploader.php
+//     curl -F'key1=key2' -F'file[]=@yourfile.png' http://example/puploader.php
 // 
 // also included is puploader-sharex.json for a sharex custom uploader.
 // 
