@@ -37,7 +37,7 @@
 
 $key1             = '1234';   // the POST request must have a parameter with this name,
 $key2             = '1234';   // and this value. works as a password. also recommended is to keep this php file in a secret folder with a secret name.
-$max_size         = 10485760; // max filesize in bytes. note that your server might impose its own restrictions.
+$max_size         = 10000000; // max filesize in bytes. note that your server might impose its own restrictions.
 $hash_algo        = 'sha256'; // hash algorithm used to generate filenames and check for duplicates.
 $min_len          = 4;        // minimum length of a generated hash.
 $default_name     = '_';      // if a file in the POST request has this as the filename, ignore it and go straight for a generated name.
