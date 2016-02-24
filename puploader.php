@@ -48,7 +48,7 @@ $subfolder_image  = 'i/';     // image folder, for files with a web image mime t
 $subfolder_video  = 'v/';     // video folder, for files with a web video mime type.
 $subfolder_audio  = 'a/';     // audio folder, for files with a web audio mime type.
 $subfolder_text   = 't/';     // text folder, for files with a web text mime type.
-$root_url         = 'http://example/'; // when the file is uploaded, an url of form {root_url}{subfolder}{file} is returned.
+$root_url         = 'http://example/'; // when the file is uploaded, a url of form {root_url}{subfolder}{file} is returned.
 
 if (isset($_POST[$key1]) && $_POST[$key1] === $key2 && isset($_FILES['file'])) {
 	try {
