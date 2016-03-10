@@ -68,10 +68,9 @@ if (isset($_POST[$key1]) && $_POST[$key1] === $key2 && isset($_FILES['file'])) {
 
 				if ($info['filename'] === $default_name) {
 					$info['filename'] = substr($hash, 0, $min_len);
-					$tries += 1;
+					$tries = 1;
 				}
 
-				$subfolder = $subfolder_direct;
 				if (
 					$mime === 'image/png' ||
 					$mime === 'image/jpeg' ||
@@ -104,6 +103,8 @@ if (isset($_POST[$key1]) && $_POST[$key1] === $key2 && isset($_FILES['file'])) {
 					$mime === 'text/json'
 				) {
 					$subfolder = $subfolder_text;
+				} else {
+					$subfolder = $subfolder_direct;
 				}
 
 				$try_name = $info['filename'] . $info['extension'];
