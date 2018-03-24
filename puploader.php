@@ -3,7 +3,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2016 sides
+ * Copyright (c) 2018 sides
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,22 +28,19 @@
 // puploader - personal uploader
 //     curl -F'key1=key2' -F'file[]=@yourfile.png' http://example/puploader.php
 // 
-// also included is puploader-sharex.json for a sharex custom uploader.
-// 
 // note that this does nothing to prevent bad mime types or uploading .php files.
 // you should disable php execution, and anything else bad, in the subfolders,
 // but also not upload .php files or bad files.
 // 
 
 $key1             = '1234';   // the POST request must have a parameter with this name,
-$key2             = '1234';   // and this value. works as a password. also recommended is to keep this php file in a secret folder with a secret name.
-$max_size         = 10000000; // max filesize in bytes. note that your server might impose its own restrictions.
+$key2             = '1234';   // and this value. works as a password.
 $hash_algo        = 'sha256'; // hash algorithm used to generate filenames and check for duplicates.
-$min_len          = 4;        // minimum length of a generated hash.
-$default_name     = '_';      // if a file in the POST request has this as the filename, ignore it and go straight for a generated name.
+$hash_min_len     = 4;        // minimum length of a generated hash.
 $hash_sep         = '-';      // separator between the filename and hash when necessary.
+$hash_filename    = '_';      // if a file in the POST request has this as the filename, ignore it and use a fully generated name.
 $root_path        = '../';    // root path of subfolders, can be relative to this php file.
-$subfolder_direct = 'd/';     // direct (or default) folder, when there is no matching mime type.
+$subfolder_direct = 'd/';     // direct folder, when there is no matching mime type.
 $subfolder_image  = 'i/';     // image folder, for files with a web image mime type.
 $subfolder_video  = 'v/';     // video folder, for files with a web video mime type.
 $subfolder_audio  = 'a/';     // audio folder, for files with a web audio mime type.
@@ -57,7 +54,7 @@ if (isset($_POST[$key1]) && $_POST[$key1] === $key2 && isset($_FILES['file'])) {
 			foreach ($value1 as $key2 => $value2)
 				$files[$key2][$key1] = $value2;
 		foreach ($files as $file) {
-			if ($file['error'] === UPLOAD_ERR_OK && $file['size'] <= $max_size) {
+			if ($file['error'] === UPLOAD_ERR_OK) {
 				$tries = 0;
 				$hash = hash_file($hash_algo, $file['tmp_name']);
 				$mime = mime_content_type($file['tmp_name']);
@@ -66,8 +63,8 @@ if (isset($_POST[$key1]) && $_POST[$key1] === $key2 && isset($_FILES['file'])) {
 				if (isset($info['extension']) && strlen($info['extension']) > 0)
 					$info['extension'] = '.' . $info['extension'];
 
-				if ($info['filename'] === $default_name) {
-					$info['filename'] = substr($hash, 0, $min_len);
+				if ($info['filename'] === $hash_filename) {
+					$info['filename'] = substr($hash, 0, $hash_min_len);
 					$tries = 1;
 				}
 
@@ -116,8 +113,8 @@ if (isset($_POST[$key1]) && $_POST[$key1] === $key2 && isset($_FILES['file'])) {
 					else
 						$try_name = '';
 					$max_len = strlen($hash);
-					while ($min_len + $tries < $max_len) {
-						$try_name_hash = $try_name . substr($hash, 0, $min_len + $tries) . $info['extension'];
+					while ($hash_min_len + $tries < $max_len) {
+						$try_name_hash = $try_name . substr($hash, 0, $hash_min_len + $tries) . $info['extension'];
 						if (!file_exists("$root_path$subfolder$try_name_hash") && move_uploaded_file($file['tmp_name'], "$root_path$subfolder$try_name_hash")) {
 							echo "$root_url$subfolder" . rawurlencode($try_name_hash);
 							break;
